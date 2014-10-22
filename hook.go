@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/Soulou/errgo-rollbar"
@@ -32,6 +33,7 @@ func (hook Hook) Fire(entry *logrus.Entry) error {
 		// all the variables to rollbar
 		req = new(http.Request)
 		req.Header = make(http.Header)
+		req.URL = new(url.URL)
 	}
 
 	// All the fields which aren't level|msg|error|time|req are added
