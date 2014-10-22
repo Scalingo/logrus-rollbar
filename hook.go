@@ -12,7 +12,7 @@ import (
 	"github.com/stvp/rollbar"
 )
 
-type Hook struct{}
+type Hook struct{ SkipLevel int }
 
 func (hook Hook) Fire(entry *logrus.Entry) error {
 	var req *http.Request
@@ -62,7 +62,7 @@ func (hook Hook) Fire(entry *logrus.Entry) error {
 		errorMsg = errors.New(entry.Data["msg"].(string))
 	}
 
-	rollbar.RequestErrorWithStack(rollbar.ERR, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5))
+	rollbar.RequestErrorWithStack(rollbar.ERR, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+hook.SkipLevel))
 	return nil
 }
 
