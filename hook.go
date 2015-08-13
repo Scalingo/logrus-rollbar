@@ -12,6 +12,10 @@ import (
 	"github.com/stvp/rollbar"
 )
 
+var (
+	SeverityCritical = "critical"
+)
+
 type Hook struct{ SkipLevel int }
 
 func (hook Hook) Fire(entry *logrus.Entry) error {
@@ -62,7 +66,12 @@ func (hook Hook) Fire(entry *logrus.Entry) error {
 		errorMsg = errors.New(entry.Data["msg"].(string))
 	}
 
-	rollbar.RequestErrorWithStack(rollbar.ERR, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+hook.SkipLevel))
+	severity := rollbar.ERR
+	if entry.Data["severity"] == SeverityCritical {
+		severity = rollbar.CRIT
+	}
+
+	rollbar.RequestErrorWithStack(severity, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+hook.SkipLevel))
 	return nil
 }
 
