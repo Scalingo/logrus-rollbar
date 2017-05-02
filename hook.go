@@ -16,20 +16,31 @@ var (
 	SeverityCritical = "critical"
 )
 
-type Hook struct{ SkipLevel int }
+type Hook struct {
+	Sender
+	SkipLevel int
+}
 
 func (hook Hook) Fire(entry *logrus.Entry) error {
 	var req *http.Request
 
 	if r, ok := entry.Data["req"]; ok {
-		req, ok = r.(*http.Request)
+		upstreamReq, ok := r.(*http.Request)
 		if ok {
-			// We don't want to log credentials
-			req.Header.Del("Authorization")
+			req, _ = http.NewRequest(upstreamReq.Method, upstreamReq.URL.String(), nil)
+			req.RemoteAddr = upstreamReq.RemoteAddr
+			for key, val := range upstreamReq.Header {
+				// We don't want to log credentials
+				if key == "Authorization" {
+					continue
+				}
+				req.Header[key] = val
+			}
 
+			// Replacing the request struct by something simpler in the entry fields
 			entry.Data["req"] = fmt.Sprintf(
-				"%s %s %s %s",
-				req.Method, req.URL, req.UserAgent(), req.RemoteAddr,
+				"%s %s %s",
+				req.Method, req.URL, req.RemoteAddr,
 			)
 		}
 	} else {
@@ -71,7 +82,7 @@ func (hook Hook) Fire(entry *logrus.Entry) error {
 		severity = rollbar.CRIT
 	}
 
-	rollbar.RequestErrorWithStack(severity, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+hook.SkipLevel))
+	hook.Sender.RequestErrorWithStack(severity, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+hook.SkipLevel))
 	return nil
 }
 
