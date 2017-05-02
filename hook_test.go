@@ -30,7 +30,7 @@ func (s *mockSender) RequestErrorWithStack(severity string, req *http.Request, e
 
 func TestHook_Fire(t *testing.T) {
 	sender := &mockSender{}
-	hook := Hook{Sender: sender}
+	hook := hook{Sender: sender}
 	logger := logrus.New()
 	entry := logrus.NewEntry(logger)
 	entry.Data["msg"] = "line of log"
@@ -56,7 +56,7 @@ func TestHook_Fire(t *testing.T) {
 
 func TestHook_FireWithReq(t *testing.T) {
 	sender := &mockSender{}
-	hook := Hook{Sender: sender}
+	hook := hook{Sender: sender}
 	logger := logrus.New()
 	entry := logrus.NewEntry(logger)
 	entry.Data["msg"] = "line of log"
@@ -80,7 +80,7 @@ func TestHook_FireWithReq(t *testing.T) {
 // This test case aims at testing race conditions
 func TestHook_FireWithReq_Concurrent(t *testing.T) {
 	sender := &mockSender{}
-	hook := Hook{Sender: sender}
+	hook := hook{Sender: sender}
 	logger := logrus.New()
 	req, _ := http.NewRequest("GET", "/", nil)
 	req.Header.Add("Authorization", "password")

@@ -16,12 +16,16 @@ var (
 	SeverityCritical = "critical"
 )
 
-type Hook struct {
+type hook struct {
 	Sender
 	SkipLevel int
 }
 
-func (hook Hook) Fire(entry *logrus.Entry) error {
+func New(skipLevel int) logrus.Hook {
+	return hook{Sender: RollbarSender{}, SkipLevel: skipLevel}
+}
+
+func (h hook) Fire(entry *logrus.Entry) error {
 	var req *http.Request
 
 	if r, ok := entry.Data["req"]; ok {
@@ -82,11 +86,11 @@ func (hook Hook) Fire(entry *logrus.Entry) error {
 		severity = rollbar.CRIT
 	}
 
-	hook.Sender.RequestErrorWithStack(severity, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+hook.SkipLevel))
+	h.Sender.RequestErrorWithStack(severity, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+h.SkipLevel))
 	return nil
 }
 
-func (hook Hook) Levels() []logrus.Level {
+func (h hook) Levels() []logrus.Level {
 	return []logrus.Level{
 		logrus.ErrorLevel,
 		logrus.FatalLevel,
