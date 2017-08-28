@@ -3,7 +3,7 @@
 ## Setup
 
 ```sh
-go get github.com/Appsdeck/logrus-rollbar
+go get gopkg.in/Scalingo/logrus-rollbar.v1
 ```
 
 ## Example
@@ -15,10 +15,10 @@ import (
 	"fmt"
 	"net/http"
 	"math/rand"
-	
+
 	"github.com/Sirupsen/logrus"
-	rollbar "github.com/AlekSi/rollbar-go"
-	logrus_rollbar "github.com/Appsdeck/logrus-rollbar"
+	"github.com/stvp/rollbar"
+	logrusrollbar "gopkg.in/Scalingo/logrus-rollbar.v1"
 )
 
 
@@ -27,7 +27,7 @@ func main() {
 	rollbar.Environment = "testing"
 
 	logger := logrus.New()
-	logger.Hooks.Add(logrus_rollbar.Hook{})
+	logger.Hooks.Add(logrusrollbar.Hook{})
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		err := fmt.Errorf("something wrong happened in the database")

@@ -19,12 +19,13 @@ type senderParams struct {
 	req      *http.Request
 	error    error
 	stack    rollbar.Stack
+	fields   []*rollbar.Field
 }
 
-func (s *mockSender) RequestErrorWithStack(severity string, req *http.Request, err error, stack rollbar.Stack) error {
+func (s *mockSender) RequestErrorWithStack(severity string, req *http.Request, err error, stack rollbar.Stack, fields ...*rollbar.Field) error {
 	s.Lock()
 	defer s.Unlock()
-	s.calls = append(s.calls, senderParams{severity: severity, req: req, error: err, stack: stack})
+	s.calls = append(s.calls, senderParams{severity: severity, req: req, error: err, stack: stack, fields: fields})
 	return nil
 }
 
@@ -73,6 +74,32 @@ func TestHook_FireWithReq(t *testing.T) {
 	params := sender.calls[0]
 	if params.req.Header.Get("Authorization") != "" {
 		t.Errorf("expected Authorization header to be cleared, got", params.req.Header.Get("Authorization"))
+	}
+}
+
+func TestHook_WithExtraField(t *testing.T) {
+	sender := &mockSender{}
+	hook := hook{Sender: sender}
+	logger := logrus.New()
+	entry := logrus.NewEntry(logger)
+	entry.Data["msg"] = "line of log"
+	entry.Data["extra"] = "extrafield"
+
+	err := hook.Fire(entry)
+	if err != nil {
+		t.Errorf("expected nil error, got '%v'", err)
+	}
+
+	params := sender.calls[0]
+	if len(params.fields) != 1 {
+		t.Errorf("expected 1 extra field, got %v", len(params.fields))
+	}
+	extra, ok := params.fields[0].Data.(string)
+	if !ok {
+		t.Errorf("expected extra field string, got %t", params.fields[0].Data)
+	}
+	if extra != "extrafield" {
+		t.Errorf("expected 'extrafield' value for extra field, got %v", extra)
 	}
 }
 
