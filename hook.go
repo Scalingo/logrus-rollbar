@@ -58,9 +58,10 @@ func (h hook) Fire(entry *logrus.Entry) error {
 	// All the fields which aren't level|msg|error|time|req are added
 	// to the headers of the request which will be sent to Rollbar
 	// The main goal is to be able to see all the values on Rollbar dashboard
+	fields := []*rollbar.Field{}
 	for val, key := range entry.Data {
 		if val != "level" && val != "msg" && val != "error" && val != "time" && val != "req" {
-			req.Header.Add("log-"+val, fmt.Sprintf("%v", key))
+			fields = append(fields, &rollbar.Field{Name: val, Data: key})
 		}
 	}
 
@@ -86,7 +87,7 @@ func (h hook) Fire(entry *logrus.Entry) error {
 		severity = rollbar.CRIT
 	}
 
-	h.Sender.RequestErrorWithStack(severity, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+h.SkipLevel))
+	h.Sender.RequestErrorWithStack(severity, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+h.SkipLevel), fields...)
 	return nil
 }
 
