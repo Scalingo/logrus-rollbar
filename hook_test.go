@@ -29,6 +29,13 @@ func (s *mockSender) RequestErrorWithStack(severity string, req *http.Request, e
 	return nil
 }
 
+func (s *mockSender) ErrorWithStack(severity string, err error, stack rollbar.Stack, fields ...*rollbar.Field) error {
+	s.Lock()
+	defer s.Unlock()
+	s.calls = append(s.calls, senderParams{severity: severity, error: err, stack: stack, fields: fields})
+	return nil
+}
+
 func TestHook_Fire(t *testing.T) {
 	sender := &mockSender{}
 	hook := hook{Sender: sender}

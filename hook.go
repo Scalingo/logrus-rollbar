@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"net/url"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/Soulou/errgo-rollbar"
@@ -47,12 +46,6 @@ func (h hook) Fire(entry *logrus.Entry) error {
 				req.Method, req.URL, req.RemoteAddr,
 			)
 		}
-	} else {
-		// If there is no request, we build one in order to send
-		// all the variables to rollbar
-		req = new(http.Request)
-		req.Header = make(http.Header)
-		req.URL = new(url.URL)
 	}
 
 	// All the fields which aren't level|msg|error|time|req are added
@@ -87,7 +80,12 @@ func (h hook) Fire(entry *logrus.Entry) error {
 		severity = rollbar.CRIT
 	}
 
-	h.Sender.RequestErrorWithStack(severity, req, errorMsg, errgorollbar.BuildStackWithSkip(err, 5+h.SkipLevel), fields...)
+	stack := errgorollbar.BuildStackWithSkip(err, 5+h.SkipLevel)
+	if req == nil {
+		h.Sender.ErrorWithStack(severity, errorMsg, stack, fields...)
+	} else {
+		h.Sender.RequestErrorWithStack(severity, req, errorMsg, stack, fields...)
+	}
 	return nil
 }
 
