@@ -7,21 +7,21 @@ import (
 
 	"github.com/Scalingo/logrus-rollbar"
 	"github.com/Sirupsen/logrus"
+	"github.com/pkg/errors"
 	"github.com/stvp/rollbar"
-	"gopkg.in/errgo.v1"
 )
 
 func A() error {
-	return errgo.New("error")
+	return errors.New("error")
 }
 
 func B() error {
-	return errgo.Mask(A(), errgo.Any)
+	return errors.Wrap(A(), "A failed")
 }
 
 func main() {
 	rollbar.Token = os.Getenv("TOKEN")
-	rollbar.Environment = "testing"
+	rollbar.Environment = "staging"
 
 	logger := logrus.New()
 	logger.Hooks.Add(logrus_rollbar.New(0))
