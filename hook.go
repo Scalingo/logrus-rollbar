@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"gopkg.in/errgo.v1"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/Soulou/errgo-rollbar"
 	"github.com/stvp/rollbar"
@@ -59,10 +61,23 @@ func (h hook) Fire(entry *logrus.Entry) error {
 	}
 
 	// If there is an error field, we want it to be part of Rollbar ticket name
-	var errorMsg error
-	var err error
+	var (
+		errorMsg error
+		err      error
+		stack    rollbar.Stack
+	)
+
 	if entry.Data["error"] != nil {
 		err = entry.Data["error"].(error)
+
+		// skip level is to avoid stack trace frame from the hook itself
+		switch err.(type) {
+		case *errgo.Err:
+			stack = errgorollbar.BuildStackWithSkip(err, 5+h.SkipLevel)
+		default:
+			stack = BuildStackWithSkip(err, 6+h.SkipLevel)
+		}
+
 		errorTxt := new(bytes.Buffer)
 		errorTxt.WriteString(err.Error())
 		if msg, ok := entry.Data["msg"]; ok && msg != nil {
@@ -72,7 +87,7 @@ func (h hook) Fire(entry *logrus.Entry) error {
 		}
 		errorMsg = fmt.Errorf(errorTxt.String())
 	} else {
-		errorMsg = errors.New(entry.Data["msg"].(string))
+		errorMsg = errors.New(fmt.Sprintf("%v", entry.Data["msg"]))
 	}
 
 	severity := rollbar.ERR
@@ -80,7 +95,6 @@ func (h hook) Fire(entry *logrus.Entry) error {
 		severity = rollbar.CRIT
 	}
 
-	stack := errgorollbar.BuildStackWithSkip(err, 5+h.SkipLevel)
 	if req == nil {
 		h.Sender.ErrorWithStack(severity, errorMsg, stack, fields...)
 	} else {
