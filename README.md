@@ -1,4 +1,4 @@
-# rollbar hook for [Logrus](https://github.com/Sirupsen/logrus)
+# rollbar hook for [Logrus](https://github.com/sirupsen/logrus)
 
 ## Setup
 
@@ -16,7 +16,7 @@ import (
 	"net/http"
 	"math/rand"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/stvp/rollbar"
 	logrusrollbar "gopkg.in/Scalingo/logrus-rollbar.v1"
 )

@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/Scalingo/logrus-rollbar"
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/pkg/errors"
 	"github.com/stvp/rollbar"
 )
