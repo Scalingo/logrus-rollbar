@@ -6,9 +6,9 @@ import (
 	"os"
 
 	"github.com/Scalingo/logrus-rollbar"
-	"github.com/sirupsen/logrus"
 	"github.com/pkg/errors"
-	"github.com/stvp/rollbar"
+	"github.com/rollbar/rollbar-go"
+	"github.com/sirupsen/logrus"
 )
 
 func A() error {
@@ -20,8 +20,8 @@ func B() error {
 }
 
 func main() {
-	rollbar.Token = os.Getenv("TOKEN")
-	rollbar.Environment = "staging"
+	rollbar.SetToken(os.Getenv("TOKEN"))
+	rollbar.SetEnvironment("testing")
 
 	logger := logrus.New()
 	logger.Hooks.Add(logrus_rollbar.New(0))

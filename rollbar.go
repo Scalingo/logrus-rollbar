@@ -3,22 +3,30 @@ package logrus_rollbar
 import (
 	"net/http"
 
-	"github.com/stvp/rollbar"
+	"github.com/rollbar/rollbar-go"
 )
 
 type Sender interface {
-	RequestErrorWithStack(string, *http.Request, error, rollbar.Stack, ...*rollbar.Field) error
-	ErrorWithStack(string, error, rollbar.Stack, ...*rollbar.Field) error
+	RequestError(string, *http.Request, error, map[string]interface{})
+	Error(string, error, map[string]interface{})
 }
 
 type RollbarSender struct{}
 
-func (s RollbarSender) RequestErrorWithStack(severity string, req *http.Request, err error, stack rollbar.Stack, fields ...*rollbar.Field) error {
-	rollbar.RequestErrorWithStack(severity, req, err, stack, fields...)
-	return nil
+var (
+	levelSenders = map[string]func(args ...interface{}){
+		rollbar.CRIT:  rollbar.Critical,
+		rollbar.ERR:   rollbar.Error,
+		rollbar.WARN:  rollbar.Warning,
+		rollbar.INFO:  rollbar.Info,
+		rollbar.DEBUG: rollbar.Debug,
+	}
+)
+
+func (s RollbarSender) RequestError(severity string, req *http.Request, err error, fields map[string]interface{}) {
+	levelSenders[severity](req, err, fields)
 }
 
-func (s RollbarSender) ErrorWithStack(severity string, err error, stack rollbar.Stack, fields ...*rollbar.Field) error {
-	rollbar.ErrorWithStack(severity, err, stack, fields...)
-	return nil
+func (s RollbarSender) Error(severity string, err error, fields map[string]interface{}) {
+	levelSenders[severity](err, fields)
 }
