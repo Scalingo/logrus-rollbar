@@ -5,8 +5,28 @@ import (
 	"strconv"
 
 	"github.com/pkg/errors"
-	"github.com/stvp/rollbar"
+	"github.com/rollbar/rollbar-go"
 )
+
+// Rollbar package expect such error:
+// type CauseStacker interface {
+//   error
+//   Cause() error
+//   Stack() Stack
+// }
+
+var (
+	_ rollbar.CauseStacker = wrappedError{}
+)
+
+type wrappedError struct {
+	err error
+	msg string
+}
+
+func (err wrappedError) Error() string {
+	return err.msg
+}
 
 type causer interface {
 	Cause() error
@@ -16,8 +36,17 @@ type stackTracer interface {
 	StackTrace() errors.StackTrace
 }
 
-func BuildStack(err error) rollbar.Stack {
+func Wrap(msg string, err error) wrappedError {
+	return wrappedError{msg: msg, err: err}
+}
+
+func (err wrappedError) Cause() error {
+	return err.err
+}
+
+func (werr wrappedError) Stack() rollbar.Stack {
 	stack := rollbar.Stack{}
+	err := werr.err
 
 	// We're going to the deepest call
 	for {
@@ -35,7 +64,8 @@ func BuildStack(err error) rollbar.Stack {
 	}
 
 	errorsStack := tracer.StackTrace()
-	for _, f := range errorsStack {
+	for i := len(errorsStack) - 1; i >= 0; i-- {
+		f := errorsStack[i]
 		line, _ := strconv.Atoi(fmt.Sprintf("%d", f))
 		frame := rollbar.Frame{
 			Filename: fmt.Sprintf("%+s", f),
@@ -46,12 +76,4 @@ func BuildStack(err error) rollbar.Stack {
 	}
 
 	return stack
-}
-
-// BuildStackWithSkip concatenates the stack given by the current execution flow
-// and the stack determined by the pkg/errors error
-func BuildStackWithSkip(err error, skip int) rollbar.Stack {
-	errStack := BuildStack(err)
-	execStack := rollbar.BuildStack(skip)
-	return append(errStack, execStack...)
 }
