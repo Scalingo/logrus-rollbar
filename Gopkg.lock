@@ -2,12 +2,12 @@
 
 
 [[projects]]
-  branch = "deps/new-rollbar"
-  digest = "1:32203fbff6d83e94751d9483d24a5c4794877eb886515484ca98fcc9197546e3"
+  branch = "master"
+  digest = "1:7691025cfc4a2c68051e3b44b612e2ecf3f3537f3516a9e85b0b3c29522309e6"
   name = "github.com/Soulou/errgo-rollbar"
   packages = ["."]
   pruneopts = "UT"
-  revision = "1e2722fa3ad9cdaf28db74aada400263ad45a54d"
+  revision = "9d551cd3bae923dc236ca5f8d951686c7bbcfe94"
 
 [[projects]]
   branch = "master"

@@ -24,11 +24,6 @@
 #   go-tests = true
 #   unused-packages = true
 
-
-[[constraint]]
-  branch = "deps/new-rollbar"
-  name = "github.com/Soulou/errgo-rollbar"
-
 [prune]
   go-tests = true
   unused-packages = true
