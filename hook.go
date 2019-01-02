@@ -73,6 +73,11 @@ func (h hook) Fire(entry *logrus.Entry) error {
 		if entry.Message != "" {
 			errorTxt.WriteString(" - " + entry.Message)
 		}
+
+		if entry.Data["msg"] != nil {
+			errorTxt.WriteString(fmt.Sprintf(" - %v", entry.Data["msg"]))
+		}
+
 		msg := errorTxt.String()
 
 		switch err.(type) {
