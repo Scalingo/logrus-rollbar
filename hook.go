@@ -65,18 +65,17 @@ func (h hook) Fire(entry *logrus.Entry) error {
 		err error
 	)
 
+	msg := entry.Message
+	if entry.Data["msg"] != nil {
+		msg = fmt.Sprintf("%s - %v", msg, entry.Data["msg"])
+	}
+
 	if entry.Data["error"] != nil {
 		err = entry.Data["error"].(error)
 
 		errorTxt := new(bytes.Buffer)
 		errorTxt.WriteString(err.Error())
-		if entry.Message != "" {
-			errorTxt.WriteString(" - " + entry.Message)
-		}
-
-		if entry.Data["msg"] != nil {
-			errorTxt.WriteString(fmt.Sprintf(" - %v", entry.Data["msg"]))
-		}
+		errorTxt.WriteString(" - " + msg)
 
 		msg := errorTxt.String()
 
@@ -92,7 +91,7 @@ func (h hook) Fire(entry *logrus.Entry) error {
 			err = Wrap(msg, err)
 		}
 	} else {
-		err = errors.New(fmt.Sprintf("%v", entry.Data["msg"]))
+		err = errors.New(msg)
 	}
 
 	severity := rollbar.ERR
