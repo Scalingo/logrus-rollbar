@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/Scalingo/logrus-rollbar"
+	logrus_rollbar "github.com/Scalingo/logrus-rollbar"
 	"github.com/rollbar/rollbar-go"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/errgo.v1"
@@ -24,7 +24,7 @@ func main() {
 	rollbar.SetEnvironment("testing")
 
 	logger := logrus.New()
-	logger.Hooks.Add(logrus_rollbar.New(0))
+	logger.Hooks.Add(logrus_rollbar.New())
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		err := B()
