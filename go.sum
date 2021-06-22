@@ -1,5 +1,5 @@
-github.com/Scalingo/errgo-rollbar v0.1.1 h1:eWefHr70sbvkMxKB1nvbW5LscRdJmgzEVKoe25wyLCc=
-github.com/Scalingo/errgo-rollbar v0.1.1/go.mod h1:X/V9ToqDHSOf3Lg9QDdR2C3vOQ3hlIWbKrFV/va//xQ=
+github.com/Scalingo/errgo-rollbar v0.2.0 h1:Jm/7K2ymVhPGGFL8BgFGOjpPRlCk+vYRCDtT1PaUfWI=
+github.com/Scalingo/errgo-rollbar v0.2.0/go.mod h1:InPX+PbaicLpePiWdmay2bJ4gtF4anm2L8T6rITx41A=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
