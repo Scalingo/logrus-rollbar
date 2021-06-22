@@ -1,5 +1,5 @@
-github.com/Soulou/errgo-rollbar v0.1.0 h1:JcC4ISwjuL6D0uGObG+gWN5nTcDQ2Nb4a6zJ8wzLUPU=
-github.com/Soulou/errgo-rollbar v0.1.0/go.mod h1:7+LUv1ler6IXAzrVgw3RPKL9CQ43oaLiEp2zv9Gr45E=
+github.com/Scalingo/errgo-rollbar v0.1.1 h1:eWefHr70sbvkMxKB1nvbW5LscRdJmgzEVKoe25wyLCc=
+github.com/Scalingo/errgo-rollbar v0.1.1/go.mod h1:X/V9ToqDHSOf3Lg9QDdR2C3vOQ3hlIWbKrFV/va//xQ=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/konsorten/go-windows-terminal-sequences v0.0.0-20180402223658-b729f2633dfe h1:CHRGQ8V7OlCYtwaKPJi3iA7J+YdNKdo8j7nG5IgDhjs=

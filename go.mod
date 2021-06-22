@@ -3,7 +3,7 @@ module github.com/Scalingo/logrus-rollbar
 go 1.16
 
 require (
-	github.com/Soulou/errgo-rollbar v0.1.0
+	github.com/Scalingo/errgo-rollbar v0.1.1
 	github.com/pkg/errors v0.8.0
 	github.com/rollbar/rollbar-go v1.2.0
 	github.com/sirupsen/logrus v1.1.0
