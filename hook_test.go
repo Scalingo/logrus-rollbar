@@ -40,7 +40,7 @@ func TestHook_Fire(t *testing.T) {
 	hook := hook{Sender: sender}
 	logger := logrus.New()
 	entry := logrus.NewEntry(logger)
-	entry.Data["msg"] = "line of log"
+	entry.Message = "line of log"
 
 	err := hook.Fire(entry)
 	if err != nil {
@@ -57,7 +57,7 @@ func TestHook_Fire(t *testing.T) {
 	}
 
 	if params.error.Error() != "line of log" {
-		t.Errorf("expected '%v' error, got '%v'", entry.Data["msg"], params.error.Error())
+		t.Errorf("expected '%v' error, got '%v'", entry.Message, params.error.Error())
 	}
 }
 
