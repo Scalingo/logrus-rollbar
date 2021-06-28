@@ -1,4 +1,4 @@
-# Rollbar Hook for [Logrus](https://github.com/sirupsen/logrus) v1.3.2
+# Rollbar Hook for [Logrus](https://github.com/sirupsen/logrus) v1.4.0
 
 ## Setup
 
@@ -53,8 +53,8 @@ Commit, tag and create a new release:
 
 ```sh
 git add CHANGELOG.md README.md
-git commit -m "Bump v1.3.2"
-git tag v1.3.2
+git commit -m "Bump v1.4.0"
+git tag v1.4.0
 git push origin master
 git push --tags
 ```
