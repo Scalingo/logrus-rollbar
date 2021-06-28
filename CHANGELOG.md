@@ -2,6 +2,8 @@
 
 ## To be Released
 
+* chore(deps): bump github.com/rollbar/rollbar-go from 1.4.0 to 1.4.1
+
 ## 1.4.0
 
 * Migrate to Go modules
