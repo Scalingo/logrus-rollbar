@@ -2,7 +2,7 @@
 
 ## To be Released
 
-* chore(deps): bump github.com/rollbar/rollbar-go from 1.4.0 to 1.4.1
+* chore(deps): bump github.com/rollbar/rollbar-go from 1.4.0 to 1.4.2
 
 ## 1.4.0
 
