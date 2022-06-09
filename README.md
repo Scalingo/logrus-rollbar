@@ -57,4 +57,5 @@ git commit -m "Bump v1.4.1"
 git tag v1.4.1
 git push origin master
 git push --tags
+hub release create v1.4.1
 ```
