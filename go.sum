@@ -1,5 +1,5 @@
-github.com/Scalingo/errgo-rollbar v0.2.0 h1:Jm/7K2ymVhPGGFL8BgFGOjpPRlCk+vYRCDtT1PaUfWI=
-github.com/Scalingo/errgo-rollbar v0.2.0/go.mod h1:InPX+PbaicLpePiWdmay2bJ4gtF4anm2L8T6rITx41A=
+github.com/Scalingo/errgo-rollbar v0.2.1 h1:S2hz3FcjiSEB8yoQS2A0WzUY2Cq6tvD2IHzB4xlW4bA=
+github.com/Scalingo/errgo-rollbar v0.2.1/go.mod h1:C2wzmHChrL2NqZDhDIIWemnJtBJh5nvAbw396uVR6Kc=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -16,7 +16,6 @@ github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/rollbar/rollbar-go v1.4.0/go.mod h1:kLQ9gP3WCRGrvJmF0ueO3wK9xWocej8GRX98D8sa39w=
 github.com/rollbar/rollbar-go v1.4.2 h1:UzxjFgg9CFE0Vb3grGPpZHCnbKzNd8RYFtFHEKovauU=
 github.com/rollbar/rollbar-go v1.4.2/go.mod h1:kLQ9gP3WCRGrvJmF0ueO3wK9xWocej8GRX98D8sa39w=
 github.com/sirupsen/logrus v1.8.1 h1:dJKuHgqk1NNQlqoA6BTlM1Wf9DOH3NBjQyu0h9+AZZE=
