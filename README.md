@@ -1,4 +1,4 @@
-# Rollbar Hook for [Logrus](https://github.com/sirupsen/logrus) v1.4.1
+# Rollbar Hook for [Logrus](https://github.com/sirupsen/logrus) v1.4.2
 
 ## Setup
 
@@ -52,7 +52,7 @@ Bump new version number in:
 Commit, tag and create a new release:
 
 ```sh
-version="1.4.1"
+version="1.4.2"
 
 git switch --create release/${version}
 git add CHANGELOG.md README.md
