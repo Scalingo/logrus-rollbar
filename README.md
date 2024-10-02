@@ -18,6 +18,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/stvp/rollbar"
+
 	logrusrollbar "github.com/Scalingo/logrus-rollbar"
 )
 
