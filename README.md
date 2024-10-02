@@ -3,7 +3,7 @@
 ## Setup
 
 ```sh
-go get gopkg.in/Scalingo/logrus-rollbar.v1
+go get github.com/Scalingo/logrus-rollbar
 ```
 
 ## Example
@@ -18,7 +18,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/stvp/rollbar"
-	logrusrollbar "gopkg.in/Scalingo/logrus-rollbar.v1"
+	logrusrollbar "github.com/Scalingo/logrus-rollbar"
 )
 
 
