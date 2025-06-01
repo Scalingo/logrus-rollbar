@@ -1,6 +1,7 @@
 module github.com/Scalingo/logrus-rollbar
 
-go 1.22
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
@@ -11,4 +12,4 @@ require (
 	gopkg.in/errgo.v1 v1.0.1
 )
 
-require golang.org/x/sys v0.32.0 // indirect
+require golang.org/x/sys v0.33.0 // indirect
