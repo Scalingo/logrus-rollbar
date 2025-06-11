@@ -2,6 +2,8 @@
 
 ## To be Released
 
+* chore(go): use go 1.24
+
 ## 1.4.2
 
 * chore(deps): bump all dependencies
