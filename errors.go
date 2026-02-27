@@ -46,7 +46,7 @@ func (err wrappedError) Cause() error {
 }
 
 func (werr wrappedError) Stack() []runtime.Frame {
-	stack := []runtime.Frame{}
+	var stack []runtime.Frame
 	err := werr.err
 
 	// We're going to the deepest call
@@ -58,10 +58,10 @@ func (werr wrappedError) Stack() []runtime.Frame {
 		err = c.Cause()
 	}
 
-	// Return an empty stack
+	// Return nil stack so rollbar-go can fallback to runtime.Callers
 	tracer, ok := err.(stackTracer)
 	if !ok {
-		return stack
+		return nil
 	}
 
 	errorsStack := tracer.StackTrace()
