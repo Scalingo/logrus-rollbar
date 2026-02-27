@@ -59,6 +59,11 @@ func (werr wrappedError) Stack() []runtime.Frame {
 	}
 
 	// Return nil stack so rollbar-go can fallback to runtime.Callers
+	// The relevant code in rollbar-go: https://github.com/rollbar/rollbar-go/blob/4c2ee8c66b8ae695aff08fc331445a4639036e68/rollbar.go#L89
+	// `stackTracer` is implemented by errors that carry a captured stack trace for example:
+	// - github.com/pkg/errors via errors.New/Wrap/Wrapf has a full stack trace,
+	// - github.com/go-errgo/errgo via errgo.New which includes the caller location,
+	// Plain errors.New from the standard library do not include a stack trace.
 	tracer, ok := err.(stackTracer)
 	if !ok {
 		return nil
