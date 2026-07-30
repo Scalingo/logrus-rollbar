@@ -61,6 +61,27 @@ func TestHook_Fire(t *testing.T) {
 	}
 }
 
+func TestHook_FireWithStringErrorField(t *testing.T) {
+	sender := &mockSender{}
+	hook := hook{Sender: sender}
+	entry := logrus.NewEntry(logrus.New())
+	entry.Message = "line of log"
+	entry.Data["error"] = "failure reason"
+
+	err := hook.Fire(entry)
+	if err != nil {
+		t.Fatalf("expected nil error, got %v", err)
+	}
+
+	if len(sender.calls) != 1 {
+		t.Fatalf("expected 1 call, got %d", len(sender.calls))
+	}
+
+	if sender.calls[0].error.Error() != "failure reason - line of log" {
+		t.Fatalf("expected error %q, got %q", "failure reason - line of log", sender.calls[0].error.Error())
+	}
+}
+
 func TestHook_FireWithReq(t *testing.T) {
 	sender := &mockSender{}
 	hook := hook{Sender: sender}
@@ -194,7 +215,7 @@ func TestHook_WithPkgErrors(t *testing.T) {
 			Function: "errorsFoo",
 			File:     "hook_pkgerrors_test.go",
 		}, {
-			Line:     154,
+			Line:     175,
 			Function: "TestHook_WithPkgErrors",
 			File:     "hook_test.go",
 		}, {
