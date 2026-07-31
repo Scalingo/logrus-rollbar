@@ -66,7 +66,7 @@ Once the pull request merged, you can tag the new release.
 
 ```sh
 git tag v${version}
-git push origin master v${version}
+git push origin v${version}
 gh release create v${version}
 ```
 
