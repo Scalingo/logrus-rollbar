@@ -10,4 +10,4 @@ require (
 	gopkg.in/errgo.v1 v1.0.1
 )
 
-require golang.org/x/sys v0.46.0 // indirect
+require golang.org/x/sys v0.47.0 // indirect
